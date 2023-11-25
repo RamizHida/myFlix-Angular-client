@@ -88,7 +88,7 @@ export class UserRegistrationService {
   getUser(userID: number): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
-      .get(apiUrl + '/users/' + userID, {
+      .get(apiUrl + 'users/' + userID, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
