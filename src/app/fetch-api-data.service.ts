@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-// import { catchError } from 'rxjs/internal/operators';
 import { catchError } from 'rxjs/operators';
 import {
   HttpClient,
@@ -24,7 +23,10 @@ export class UserRegistrationService {
   public userRegistration(userDetails: any): Observable<any> {
     console.log(userDetails);
     return this.http
-      .post(apiUrl + 'users', userDetails)
+      .post(apiUrl + 'users', userDetails, {
+        responseType: 'text',
+        observe: 'response',
+      })
       .pipe(catchError(this.handleError));
   }
 
@@ -32,7 +34,7 @@ export class UserRegistrationService {
   public userLogin(userCredentials: any): Observable<any> {
     console.log(userCredentials);
     return this.http
-      .post(apiUrl + 'login' + new URLSearchParams(userCredentials), {})
+      .post(apiUrl + 'login', userCredentials)
       .pipe(catchError(this.handleError));
   }
 
