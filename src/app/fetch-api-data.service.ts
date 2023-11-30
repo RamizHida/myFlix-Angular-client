@@ -39,12 +39,13 @@ export class UserRegistrationService {
   }
 
   getToken() {
-    return localStorage.getItem('token');
+    return JSON.stringify(localStorage.getItem('token'));
   }
 
   // Making the api call for the get all movies endpoint
   getAllMovies(): Observable<any> {
-    const token = this.getToken();
+    const token = localStorage.getItem('token');
+    console.log('my token iss,', token);
     return this.http
       .get(apiUrl + 'movies', {
         headers: new HttpHeaders({
