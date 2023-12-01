@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserRegistrationService } from '../fetch-api-data.service';
 import { MatDialog } from '@angular/material/dialog';
+import { MovieInfoComponent } from '../movie-info/movie-info.component';
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
@@ -24,13 +25,37 @@ export class MovieCardComponent {
       return this.movies;
     });
   }
+
   // openMoviesDialog(): void {
   //   this.dialog.open(MovieCardComponent, {
   //     width: '500px',
   //   });
   // }
 
-  openGenreDetails(): void {
-    console.log('genre details clicked!');
+  openGenreDetails(genre: any): void {
+    this.dialog.open(MovieInfoComponent, {
+      data: {
+        name: genre.name,
+        description: genre.description,
+      },
+    });
+  }
+
+  openDirectorDetails(director: any): void {
+    this.dialog.open(MovieInfoComponent, {
+      data: {
+        name: director.name,
+        description: director.bio,
+      },
+    });
+  }
+
+  openSynopsisDetails(movie: any) {
+    this.dialog.open(MovieInfoComponent, {
+      data: {
+        name: `${movie.movieTitle}: Plot`,
+        description: movie.description,
+      },
+    });
   }
 }
