@@ -117,11 +117,26 @@ export class UserRegistrationService {
   // }
 
   // Making the api call for the add a movie to favorite movies list endpint
-  addMovieToFavorites(username: string, movieID: string): Observable<any> {
-    const token = this.getToken();
+  addMovieToFavorites(movieID: string): Observable<any> | any {
+    // const token = this.getToken();
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    // console.log('here', user.favoriteMovies.includes(movieID));
+
+    // if (user.favoriteMovies.includes(movieID)) {
+    //   console.log('i ran');
+    //   alert('Movie is already Favorited');
+    //   return;
+    // }
+
+    user.favoriteMovies.push(movieID);
+    localStorage.setItem('user', JSON.stringify(user));
+
     return this.http
-      .post(apiUrl + `users/${username}/movies/${movieID}`, {
+      .post(apiUrl + `users/${user.userName}/movies/${movieID}`, null, {
         headers: new HttpHeaders({
+          // 'Content-Type': 'application/json',
           Authorization: 'Bearer ' + token,
         }),
       })
@@ -147,7 +162,10 @@ export class UserRegistrationService {
 
   // Making the api call for the delete a user endpoint
   deleteUser(username: string): Observable<any> {
-    const token = this.getToken();
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    // const token = this.getToken();
     return this.http
       .delete(apiUrl + 'users/' + username, {
         headers: new HttpHeaders({
@@ -158,10 +176,20 @@ export class UserRegistrationService {
   }
 
   // Making the api call for the delete a movie from the favorite movies list endpoint
-  deleteMovieFromFavorites(username: string, movieID: string): Observable<any> {
-    const token = this.getToken();
+  deleteMovieFromFavorites(movieID: string): Observable<any> | any {
+    // const token = this.getToken();
+    const token = localStorage.getItem('token');
+    let user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    for (let i = 0; i < user.favoriteMovies.length; i++) {
+      if (user.favoriteMovies[i] === movieID) {
+        user.favoriteMovies.splice(user.favoriteMovies[i], 1);
+      }
+    }
+
+    localStorage.setItem('user', JSON.stringify(user));
     return this.http
-      .delete(apiUrl + `users/${username}/movies/${movieID}`, {
+      .delete(apiUrl + `users/${user.userName}/movies/${movieID}`, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
@@ -182,6 +210,7 @@ export class UserRegistrationService {
       console.error(
         `Error Status code ${error.status}, ` + `Error body is: ${error.error}`
       );
+      console.log(error.error);
     }
     return throwError('Something bad happened; please try again later.');
   }

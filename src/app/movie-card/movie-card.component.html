@@ -36,7 +36,15 @@
       >
         Synopsis
       </button>
-      <mat-icon>favorite_border</mat-icon>
+      <mat-icon (click)="addToFavorites(movie._id)" class="icon"
+        >favorite</mat-icon
+      >
+      <mat-icon
+        (click)="deleteFromFavorites(movie._id)"
+        [ngStyle]="{ color: 'red' }"
+        class="icon"
+        >remove</mat-icon
+      >
     </mat-card-actions>
   </mat-card>
 </div>
