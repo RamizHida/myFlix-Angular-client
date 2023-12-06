@@ -36,7 +36,6 @@ export class UserLoginFormComponent implements OnInit {
   loginUser(): void {
     this.fetchApiData.userLogin(this.userData).subscribe(
       (response) => {
-        console.log('i am response', response);
         // add current user to local storage
         localStorage.setItem('user', JSON.stringify(response.user));
 
@@ -50,7 +49,6 @@ export class UserLoginFormComponent implements OnInit {
         this.router.navigate(['movies']);
       },
       (response) => {
-        console.log(response);
         this.snackBar.open(response, 'OK', {
           duration: 2000,
         });

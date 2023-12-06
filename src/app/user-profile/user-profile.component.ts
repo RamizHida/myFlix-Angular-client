@@ -45,14 +45,8 @@ export class UserProfileComponent implements OnInit {
 
   updateProfileInfo() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    console.log('bday: ', this.userData.BirthDate);
-    console.log(typeof this.userData.BirthDate);
-    console.log(this.userData.BirthDate.length);
-    console.log('i am userdata', this.userData);
-    console.log('i am current user', user.userName);
-    console.log(typeof user.userName);
+
     this.fetchApiData.editUser(this.userData).subscribe((response) => {
-      console.log(response);
       localStorage.setItem('user', JSON.stringify(response));
       this.snackBar.open('user info updated successfully!', 'OK', {
         duration: 2000,
@@ -65,7 +59,6 @@ export class UserProfileComponent implements OnInit {
 
     if (confirm('Would you like to proceed to account deletion?')) {
       this.fetchApiData.deleteUser(user.userName).subscribe((res) => {
-        console.log(res);
         localStorage.clear();
       });
     }

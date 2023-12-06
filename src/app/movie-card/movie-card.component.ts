@@ -25,7 +25,6 @@ export class MovieCardComponent {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
-      console.log(this.movies);
       return this.movies;
     });
   }
@@ -55,7 +54,6 @@ export class MovieCardComponent {
   }
 
   openSynopsisDetails(movie: any) {
-    console.log(movie);
     this.dialog.open(MovieInfoComponent, {
       data: {
         name: `${movie.movieTitle}: Plot`,
@@ -65,12 +63,9 @@ export class MovieCardComponent {
   }
 
   addToFavorites(movieID: string): void {
-    console.log('add fn', movieID);
-
     // prevent same movie from being favored more than once
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user.favoriteMovies.includes(movieID)) {
-      console.log('i ran also');
       alert('Movie is already Favorited');
       return;
     }
@@ -79,12 +74,10 @@ export class MovieCardComponent {
       this.snackBar.open('Add the following movie to your favorites', 'OK', {
         duration: 1000,
       });
-      console.log(data);
     });
   }
 
   deleteFromFavorites(movieID: string): void {
-    console.log('delete fn', movieID);
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     // prevent deleting a movie if movie is not in list
@@ -95,22 +88,18 @@ export class MovieCardComponent {
 
     // this.isAFavoriteMovie(movieID);
     if (confirm('are you sure you want to delete?')) {
-      console.log('yes');
-
       this.fetchApiData.deleteMovieFromFavorites(movieID).subscribe(() => {
         this.snackBar.open('Deleted the movies from favorites', 'OK', {
           duration: 200,
         });
       });
     } else {
-      return console.log('no');
+      return;
     }
   }
 
   isAFavoriteMovie(movieId: string) {
-    console.log('favoreMovie fn ran', movieId);
     let user = JSON.parse(localStorage.getItem('user') || '{}');
-    console.log(user);
     return user.favoriteMovies.includes(movieId);
   }
 }
