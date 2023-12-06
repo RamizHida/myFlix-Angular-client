@@ -10,6 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class MovieCardComponent {
   movies: any[] = [];
+  favoriteMovieList: any[] = [];
+
   constructor(
     public fetchApiData: UserRegistrationService,
     public dialog: MatDialog,
@@ -53,6 +55,7 @@ export class MovieCardComponent {
   }
 
   openSynopsisDetails(movie: any) {
+    console.log(movie);
     this.dialog.open(MovieInfoComponent, {
       data: {
         name: `${movie.movieTitle}: Plot`,
@@ -62,6 +65,8 @@ export class MovieCardComponent {
   }
 
   addToFavorites(movieID: string): void {
+    console.log('add fn', movieID);
+
     // prevent same movie from being favored more than once
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user.favoriteMovies.includes(movieID)) {
@@ -69,6 +74,7 @@ export class MovieCardComponent {
       alert('Movie is already Favorited');
       return;
     }
+
     this.fetchApiData.addMovieToFavorites(movieID).subscribe((data: {}) => {
       this.snackBar.open('Add the following movie to your favorites', 'OK', {
         duration: 1000,
@@ -78,6 +84,7 @@ export class MovieCardComponent {
   }
 
   deleteFromFavorites(movieID: string): void {
+    console.log('delete fn', movieID);
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     // prevent deleting a movie if movie is not in list
@@ -85,8 +92,11 @@ export class MovieCardComponent {
       alert('The following movie is not included in your favorites');
       return;
     }
+
+    // this.isAFavoriteMovie(movieID);
     if (confirm('are you sure you want to delete?')) {
       console.log('yes');
+
       this.fetchApiData.deleteMovieFromFavorites(movieID).subscribe(() => {
         this.snackBar.open('Deleted the movies from favorites', 'OK', {
           duration: 200,
@@ -95,5 +105,12 @@ export class MovieCardComponent {
     } else {
       return console.log('no');
     }
+  }
+
+  isAFavoriteMovie(movieId: string) {
+    console.log('favoreMovie fn ran', movieId);
+    let user = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log(user);
+    return user.favoriteMovies.includes(movieId);
   }
 }

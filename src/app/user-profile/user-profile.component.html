@@ -1,1 +1,96 @@
-<p>user-profile works!</p>
+<div>
+  <h1>Profile Info</h1>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Edit Profile Info</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form #loginForm="ngForm">
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.userName"
+            placeholder="Username"
+            name="userName"
+            type="text"
+            required
+            minlength="5"
+            #userName="ngModel"
+          />
+          <div
+            *ngIf="userName.invalid && (userName.dirty || userName.touched)"
+            class="alert"
+          >
+            <div *ngIf="userName.errors?.['required']">Name is required.</div>
+            <div *ngIf="userName.errors?.['minlength']">
+              Name must be at least 4 characters long.
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.password"
+            type="password"
+            placeholder="Password"
+            name="Password"
+            minlength="5"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.userEmail"
+            type="email"
+            placeholder="Email"
+            name="userEmail"
+            minlength="5"
+            pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b"
+            required
+            #userEmail="ngModel"
+          />
+          <div
+            *ngIf="userEmail.invalid && (userEmail.dirty || userEmail.touched)"
+            class="alert"
+          >
+            <div *ngIf="userEmail.errors?.['required']">
+              Email can't be empty.
+            </div>
+            <div *ngIf="userEmail.errors?.['pattern']">
+              Please provide a valid email address.
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [(ngModel)]="userData.BirthDate"
+            type="date"
+            placeholder="Birthday"
+            name="Birthday"
+            required
+            minlength="10"
+          />
+        </mat-form-field>
+        <div id="completeForm">
+          Please complete all input fields to update your profile.
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        type="submit"
+        (click)="updateProfileInfo()"
+        color="primary"
+        [disabled]="loginForm.invalid"
+      >
+        Update Profile Info
+      </button>
+      <button mat-raised-button (click)="deleteUserAccount()" color="primary">
+        Delete Account
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

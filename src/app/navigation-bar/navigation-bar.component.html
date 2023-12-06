@@ -1,0 +1,5 @@
+<mat-toolbar class="nav-bar">
+  <div id="title" (click)="goToMovies()">myFlix</div>
+  <div (click)="goToProfile()" *ngIf="currentlyLoggedIn()">Profile Info</div>
+  <div (click)="logout()" *ngIf="currentlyLoggedIn()">Logout</div>
+</mat-toolbar>

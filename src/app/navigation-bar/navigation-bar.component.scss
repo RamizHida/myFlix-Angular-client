@@ -1,0 +1,17 @@
+.nav-bar {
+  background-color: #3f51b5;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: larger;
+  // width: 200%;
+}
+
+div:hover {
+  color: white;
+  cursor: pointer;
+}
+
+#title {
+  font-size: 2rem;
+}

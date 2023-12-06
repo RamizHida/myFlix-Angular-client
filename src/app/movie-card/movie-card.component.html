@@ -1,4 +1,4 @@
-<div style="display: flex" class="movie-card-container">
+<div class="movie-card-container">
   <mat-card
     *ngFor="let movie of movies"
     style="flex: 1 1 auto"
@@ -36,13 +36,18 @@
       >
         Synopsis
       </button>
-      <mat-icon (click)="addToFavorites(movie._id)" class="icon"
-        >favorite</mat-icon
+      <mat-icon
+        (click)="addToFavorites(movie._id)"
+        class="icon"
+        *ngIf="!isAFavoriteMovie(movie._id)"
       >
+        favorite
+      </mat-icon>
       <mat-icon
         (click)="deleteFromFavorites(movie._id)"
         [ngStyle]="{ color: 'red' }"
         class="icon"
+        *ngIf="isAFavoriteMovie(movie._id)"
         >remove</mat-icon
       >
     </mat-card-actions>

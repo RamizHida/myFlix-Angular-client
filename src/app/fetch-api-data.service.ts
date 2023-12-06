@@ -146,24 +146,23 @@ export class UserRegistrationService {
   // Making the api call for the edit a user endpoint
   // Must send a updated object with this API request (editedUser)
   editUser(editedUser: any): Observable<any> {
-    const token = this.getToken();
+    // const token = this.getToken();
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
     return this.http
-      .put(
-        apiUrl + `users/${JSON.parse(localStorage.getItem('user') || '').name}`,
-        editedUser,
-        {
-          headers: new HttpHeaders({
-            Authorization: 'Bearer ' + token,
-          }),
-        }
-      )
+      .put(apiUrl + `users/${user.userName}`, editedUser, {
+        headers: new HttpHeaders({
+          Authorization: 'Bearer ' + token,
+        }),
+      })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
   // Making the api call for the delete a user endpoint
   deleteUser(username: string): Observable<any> {
     const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    // const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     // const token = this.getToken();
     return this.http
@@ -171,8 +170,10 @@ export class UserRegistrationService {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
+        responseType: 'text',
+        observe: 'response',
       })
-      .pipe(map(this.extractResponseData), catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
   // Making the api call for the delete a movie from the favorite movies list endpoint
