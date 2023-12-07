@@ -3,7 +3,7 @@
     <mat-card-title>Sign Up!</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form>
+    <form #signupForm="ngForm">
       <mat-form-field>
         <input
           matInput
@@ -12,7 +12,10 @@
           type="text"
           name="Username"
           required
+          minlength="5"
+          #userName="ngModel"
         />
+        <div *ngIf="userName.errors?.['required']">Name is required.</div>
       </mat-form-field>
       <mat-form-field>
         <input
@@ -22,7 +25,12 @@
           placeholder="Password"
           name="Password"
           required
+          minlength="5"
+          #password="ngModel"
         />
+        <div *ngIf="password.errors?.['required']">
+          Password can't be empty.
+        </div>
       </mat-form-field>
       <mat-form-field>
         <input
@@ -32,7 +40,14 @@
           placeholder="Email"
           name="Email"
           required
+          pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b"
+          minlength="5"
+          #userEmail="ngModel"
         />
+        <div *ngIf="userEmail.errors?.['required']">Email can't be empty.</div>
+        <div *ngIf="userEmail.errors?.['pattern']">
+          Please provide a valid email address.
+        </div>
       </mat-form-field>
       <mat-form-field>
         <input
@@ -41,12 +56,23 @@
           type="date"
           placeholder="Birthday"
           name="Birthday"
+          minlength="10"
+          #userBirthDate="ngModel"
+          required
         />
+        <div *ngIf="userBirthDate.errors?.['required']">
+          Birthday can't be empty.
+        </div>
       </mat-form-field>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button (click)="registerUser()" color="primary">
+    <button
+      mat-raised-button
+      (click)="registerUser()"
+      color="primary"
+      [disabled]="signupForm.invalid"
+    >
       Sign Up
     </button>
   </mat-card-actions>
