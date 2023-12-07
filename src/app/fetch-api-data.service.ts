@@ -21,7 +21,6 @@ export class UserRegistrationService {
 
   // Making the api call for the user registration endpoint
   public userRegistration(userDetails: any): Observable<any> {
-    console.log(userDetails);
     return this.http
       .post(apiUrl + 'users', userDetails, {
         responseType: 'text',
@@ -32,7 +31,6 @@ export class UserRegistrationService {
 
   // Making the api call for the user login endpoint
   public userLogin(userCredentials: any): Observable<any> {
-    console.log(userCredentials);
     return this.http
       .post(apiUrl + 'login', userCredentials)
       .pipe(catchError(this.handleError));
@@ -45,7 +43,6 @@ export class UserRegistrationService {
   // Making the api call for the get all movies endpoint
   getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
-    console.log('my token iss,', token);
     return this.http
       .get(apiUrl + 'movies', {
         headers: new HttpHeaders({
