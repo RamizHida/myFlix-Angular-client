@@ -18,6 +18,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-login-form.component.scss'],
 })
 export class UserLoginFormComponent implements OnInit {
+  /**
+   * User data object that houses user credentials
+   * for loggin in
+   */
   @Input() userData = {
     userName: '',
     password: '',
@@ -32,7 +36,10 @@ export class UserLoginFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // This is the function responsible for sending the form inputs to the backend
+  /**
+   * Function responsible for sending user data to backend
+   * for logging in a user
+   */
   loginUser(): void {
     this.fetchApiData.userLogin(this.userData).subscribe(
       (response) => {

@@ -10,18 +10,30 @@ export class NavigationBarComponent {
   constructor(private router: Router) {}
   ngOnInit(): void {}
 
+  /**
+   * Function that routes to user profile page view
+   */
   goToProfile() {
     this.router.navigate(['profile']);
   }
 
+  /**
+   * Function that routes to movie page view
+   */
   goToMovies() {
     this.router.navigate(['movies']);
   }
 
+  /**
+   * Function that checks whether a user is currently logged in
+   */
   currentlyLoggedIn() {
     return localStorage.getItem('user');
   }
 
+  /**
+   * Function responsible for logging out a user
+   */
   logout() {
     localStorage.clear();
     this.router.navigate(['welcome']);

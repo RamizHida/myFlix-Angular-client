@@ -9,7 +9,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./movie-card.component.scss'],
 })
 export class MovieCardComponent {
+  /**
+   * Array where all movies will be housed
+   */
   movies: any[] = [];
+
+  /**
+   * Array where user's favorite movies will be housed
+   */
   favoriteMovieList: any[] = [];
 
   constructor(
@@ -22,6 +29,9 @@ export class MovieCardComponent {
     this.getMovies();
   }
 
+  /**
+   * Function that returns all movies
+   */
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
@@ -29,12 +39,10 @@ export class MovieCardComponent {
     });
   }
 
-  // openMoviesDialog(): void {
-  //   this.dialog.open(MovieCardComponent, {
-  //     width: '500px',
-  //   });
-  // }
-
+  /**
+   * Function that displays genres information
+   * @param genre a genre object
+   */
   openGenreDetails(genre: any): void {
     this.dialog.open(MovieInfoComponent, {
       data: {
@@ -44,6 +52,10 @@ export class MovieCardComponent {
     });
   }
 
+  /**
+   * Function that displays director information
+   * @param director a director object
+   */
   openDirectorDetails(director: any): void {
     this.dialog.open(MovieInfoComponent, {
       data: {
@@ -53,6 +65,10 @@ export class MovieCardComponent {
     });
   }
 
+  /**
+   * Function that opens movie information
+   * @param movie a movie object
+   */
   openSynopsisDetails(movie: any) {
     this.dialog.open(MovieInfoComponent, {
       data: {
@@ -62,6 +78,10 @@ export class MovieCardComponent {
     });
   }
 
+  /**
+   * Function that adds a movie to a user's favorite list
+   * @param movieID the id of the chosen movie to add
+   */
   addToFavorites(movieID: string): void {
     // prevent same movie from being favored more than once
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -77,6 +97,10 @@ export class MovieCardComponent {
     });
   }
 
+  /**
+   * Function that removes a movie from a user's favorite list
+   * @param movieID the id of the chosen movie to remove
+   */
   deleteFromFavorites(movieID: string): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -98,6 +122,10 @@ export class MovieCardComponent {
     }
   }
 
+  /**
+   * Function that verifies if a movie is included in a user's favorite list
+   * @param movieID the id of the chosen movie
+   */
   isAFavoriteMovie(movieId: string) {
     let user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.favoriteMovies.includes(movieId);

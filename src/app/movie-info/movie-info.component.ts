@@ -8,6 +8,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class MovieInfoComponent implements OnInit {
   constructor(
+    /**
+     * Data object used to store what info will be displayed to user
+     * when a movie card button is clicked
+     */
     @Inject(MAT_DIALOG_DATA)
     public data: {
       name: string;

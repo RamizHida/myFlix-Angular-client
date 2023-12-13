@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
   styleUrl: './user-profile.component.scss',
 })
 export class UserProfileComponent implements OnInit {
+  /**
+   * User data object that houses user information
+   */
   @Input() userData = {
     userName: JSON.parse(localStorage.getItem('user') || '{}').userName,
     password: '',
@@ -16,20 +19,15 @@ export class UserProfileComponent implements OnInit {
     BirthDate: JSON.parse(localStorage.getItem('user') || '{}').BirthDate,
   };
 
-  // @Input() userData = {
-  //   userName: '',
-  //   password: '',
-  //   userEmail: '',
-  //   BirthDate: '',
-  // };
-
   constructor(
     public fetchApiData: UserRegistrationService,
     public snackBar: MatSnackBar,
     private router: Router
   ) {}
 
-  // where current user will be stored
+  /**
+   * User object which house user info for currently logged in user
+   */
   user: any = {};
 
   ngOnInit(): void {
@@ -43,6 +41,9 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * Function responsible for updating user info
+   */
   updateProfileInfo() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -54,6 +55,10 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Function responsible for deleting user information and
+   * routing back to welcome page view
+   */
   deleteUserAccount() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
